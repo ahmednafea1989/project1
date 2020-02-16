@@ -1,57 +1,98 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Find Near by Services</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script
+src="https://code.jquery.com/jquery-3.4.1.min.js"
+integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+crossorigin="anonymous"></script>
     <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
 </head>
 <body>
-    <h3 class="ui center aligned block header">
-        <div class="ui middle aligned grid">
-              <div class="column">PROJECT TITLE</div>
-            </div>
-      </h3>
-​
-      <div class="ui middle aligned center aligned grid">
-        <div class="column"><div class="image header"><img src="map.png" alt=""></div></div>
-      </div>
-     
-      
-​
-      <div class="ui divider "></div>
-      <div class="ui divided  equal width padded grid">
-        <div class="column">
-          <form class="ui fluid form">
-            <div class="field">
-              <input type="text" placeholder="Address">
-            </div>
-            <div class="field">
-              <input type="text" placeholder="City name">
-            </div>
-            <button class="ui button" id="searchBtn">Search</button>
-            </form>
-        </div>
+    <div class="row">
+      <h3 class="ui center aligned block header"> FIND NEAR BY SERVICES</h3>
+    </div>
+    <form class="ui fluid form">
+      <div class="ui grid container">
         <div class="eight wide column">
-          <p>2</p>
+            Address: <input type="text" id="address" value="">
         </div>
-        <div class="column">
-          <div id="showLocation">3</div>
-          <p>brand</p>
-          <p>address</p>
-          <p>open</p>
-            
+        <div class="row">
+          <div class="five wide column">
+              City: <input type="text" id="city" value="">
+          </div>
+          <div class="one wide column">
+            State: <input type="text" id="state" value="">
+          </div>
+          <div class="two wide column">
+            Zip: <input type="text" id="zip" value="">
+          </div>
         </div>
+        
+​        <div class="row">
+          <div class="five wide column">
+            Service Type :
+            <select id='service'>
+              <option value="gas_station">gas_station</option>
+              <option value="airport">airport</option>
+              <option value="atm">atm</option>
+              <option value="bank">bank</option>
+              <option value="bus_station">bus_station</option>
+              <option value="cafe">cafe</option>
+              <option value="car_rental">car_rental</option>
+              <option value="car_repair">car_repair</option>
+              <option value="car_wash">car_wash</option>
+              <option value="movie_theater">movie_theater</option>
+              <option value="park">park</option>
+              <option value="police">police</option>
+              <option value="post_office">post_office</option>
+              <option value="school">school</option>
+              <option value="spa">spa</option>
+              <option value="parking">parking</option>
+              <option value="train_station">train_station</option>
+            </select>
+          </div>
+          <div class="four wide column">
+             Radius [meter]: <input type="text" id="radius" value="2000">
+          </div>
+          <div class="two wide column">          
+            <button class="ui button" id="button">Search</button>
+          </div>
+        </div>
+    </form>
+    <div class="ui grid container">
+      <div class="row">
+        <div class="eight wide row">
+          <ul id = "answerList"> 
+          </ul>
+        </div>
+      
+        <div class="eight wide column"> 
+          <div id="map"></div>
+        </div>      
       </div>
     </div>
-​
-​
+
+ <script
+src="https://code.jquery.com/jquery-3.4.1.min.js"
+integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+crossorigin="anonymous"></script> 
+    <script src="./map.js">
+    </script>         
+<script
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjhCzYb-6UuuOtBQ0gfePJ7wjwsTpu8OU&libraries=places&callback=initMap"
+          async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
