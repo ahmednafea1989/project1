@@ -1,31 +1,34 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     const $search = $("#button");
     const currentRadius = $("#radius").val();
     const currentService = $("#service").val();
-    alert(currentService);
+    const $answerList = $("#answerList")
+        //alert(currentService);
 
     function showPosition(position) {
-        var currentPosition = new google.maps.LatLng(position.coords.latitude,position.coords.longitude );
+        var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         var service = new google.maps.places.PlacesService(map);
         var request = {
             location: currentPosition,
             radius: currentRadius,
             type: [currentService],
-            openNow:false
+            openNow: false
         };
-        
 
-        service.nearbySearch(request, function (results, status) {
-            //console.log(results);
-            console.log(status);
-              if (status === google.maps.places.PlacesServiceStatus.OK) {
+
+        service.nearbySearch(request, function(results, status) {
+
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
                 for (var i = 0; i < results.length; i++) {
-                  createMarker(results[i]);
-                  console.log("results  "+results[i].name);
+                    createMarker(results[i]);
+                    // console.log("results  " + results[i].name);
+                    $li = $("<li>");
+                    $li.text(`${results[i].name} `);
+                    $answerList.append($li);
                 }
                 map.setCenter(results[0].geometry.location);
-              }
+            }
         });
     }
 
@@ -37,7 +40,7 @@ $(document).ready(function () {
         }
     }
 
-    $search.on("click", function (e) {
+    $search.on("click", function(e) {
         e.preventDefault();
         getLocation();
     })
