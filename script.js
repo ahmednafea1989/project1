@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
     const $search = $("#button");
-    const currentRadius = $("#radius").val();
-    const currentService = $("#service").val();
+    let radius = "";
+    let service = "";
     const $answerList = $("#answerList");
     let address = "";
     let city = "";
@@ -14,8 +14,8 @@ $(document).ready(function() {
         var service = new google.maps.places.PlacesService(map);
         var request = {
             location: currentPosition,
-            radius: currentRadius,
-            type: [currentService],
+            radius: radius,
+            type: [service],
             openNow: false
         };
         service.nearbySearch(request, function(results, status) {
@@ -66,7 +66,7 @@ $(document).ready(function() {
         filterArray.push(filterOf(`postalcode`, zip));
         let filter = '';
         for (let i = 0; i < filterArray.length; i++) {
-            if (filter != "") {
+            if (filter != "" && filterArray[i] != "") {
                 filter += "&";
             }
             filter += filterArray[i];
@@ -74,7 +74,6 @@ $(document).ready(function() {
         alert(filter);
         return filter;
     }
-
 
     function showPosition(position) {
         var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -94,27 +93,33 @@ $(document).ready(function() {
         getLonLat(filter);
     }
 
-
     function setLocalStorage() {
         localStorage.setItem('address', address);
         localStorage.setItem('city', city);
         localStorage.setItem('state', state);
         localStorage.setItem('zip', zip);
+        localStorage.setItem('radius', radius);
+        localStorage.setItem('service', service);
     }
 
     function getLocalStorage() {
-        address = localStorage.getItem('address');
-        city = localStorage.getItem('city');
-        state = localStorage.getItem('state');
-        zip = localStorage.getItem('zip');
-
+        $("#address").text = localStorage.getItem('address');
+        $("#city").text = localStorage.getItem('city');
+        $("#state").text = localStorage.getItem('state');
+        $("#zip").text = localStorage.getItem('zip');
+        $("#radius").text = localStorage.getItem('radius');
+        $("#service").text = localStorage.getItem('service');
     }
+
     $search.on("click", function(e) {
         e.preventDefault();
         address = $("#address").val();
         city = $("#city").val();
         state = $("#state").val();
         zip = $("#zip").val();
+        radius = $("#radius").val();
+        service = $("#service").val();
+
         setLocalStorage();
 
         if (address === "" && city === "" && state === "" && zip === "") {
