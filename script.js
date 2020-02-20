@@ -1,13 +1,13 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     const $search = $("#button");
     const currentRadius = $("#radius").val();
     const currentService = $("#service").val();
     const $answerList = $("#answerList");
-    const address = $("#address").val();
-    const city = $("#city").val();
-    const state = $("#state").val();
-    const zip = $("#zip").val();
+    let address = "";
+    let city = "";
+    let state = "";
+    let zip = "";
 
 
     function showCurrentPosition(currentPosition) {
@@ -18,9 +18,9 @@ $(document).ready(function () {
             type: [currentService],
             openNow: false
         };
-        service.nearbySearch(request, function (results, status) {
+        service.nearbySearch(request, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-                for (var i = 0; i < results.length; i++) {
+                for (let i = 0; i < results.length; i++) {
                     createMarker(results[i]);
                     // console.log("results  " + results[i].name);
                     $li = $("<li>");
@@ -35,13 +35,13 @@ $(document).ready(function () {
     function showPositionByLatLon(lat, lon) {
         var currentPosition = new google.maps.LatLng(lat, lon);
         showCurrentPosition(currentPosition)
-    }  
+    }
 
     function getLonLat(filter) {
         $.ajax({
             url: queryUrl(filter),
             method: "GET"
-        }).then(function (response) {
+        }).then(function(response) {
             showPositionByLatLon(response[0].lat, response[0].lon)
         })
     }
@@ -50,34 +50,38 @@ $(document).ready(function () {
         return `https://us1.locationiq.com/v1/search.php?key=d54f4fa47e6c4c&${filter}&format=json`;
     };
 
-    function callApi() {
-        let filter = "";
-        if (address === "" && city === "" && state === "") {
-            filter = `postalcode=${zip}`
-        } else if (address === "" && city === "" && zip === "") {
-            filter = `statecode=${state}`
-        } else if (address === "") {
-            if (city === "") {
-                filter = `statecode=${state}`
-            } else {
-                filter = `city=${city}&statecode=${state}`
-            }
-        } else if (address != "" && city != "" && state != "") {
-            filter = `address=${address}&city=${city}&statecode=${state}`
-        }
-        if (filter === ""){
-
+    function filterOf(name, item) {
+        if (item === "") {
+            return "";
         } else {
-            getLonLat(filter)
+            return `${name}=${item}`
         }
     }
+
+    function createFilter() {
+        let filterArray = [];
+        filterArray.push(filterOf(`address`, address));
+        filterArray.push(filterOf(`city`, city));
+        filterArray.push(filterOf(`statecode`, state));
+        filterArray.push(filterOf(`postalcode`, zip));
+        let filter = '';
+        for (let i = 0; i < filterArray.length; i++) {
+            if (filter != "") {
+                filter += "&";
+            }
+            filter += filterArray[i];
+        }
+        alert(filter);
+        return filter;
+    }
+
 
     function showPosition(position) {
         var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         showCurrentPosition(currentPosition);
     }
 
-    function getLocation() {
+    function getResultsByCurrentLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
         } else {
@@ -85,12 +89,38 @@ $(document).ready(function () {
         }
     }
 
-   
-    $search.on("click", function (e) {
+    function getResultsByAddress() {
+        const filter = createFilter();
+        getLonLat(filter);
+    }
+
+
+    function setLocalStorage() {
+        localStorage.setItem('address', address);
+        localStorage.setItem('city', city);
+        localStorage.setItem('state', state);
+        localStorage.setItem('zip', zip);
+    }
+
+    function getLocalStorage() {
+        address = localStorage.getItem('address');
+        city = localStorage.getItem('city');
+        state = localStorage.getItem('state');
+        zip = localStorage.getItem('zip');
+
+    }
+    $search.on("click", function(e) {
         e.preventDefault();
+        address = $("#address").val();
+        city = $("#city").val();
+        state = $("#state").val();
+        zip = $("#zip").val();
+        setLocalStorage();
+
         if (address === "" && city === "" && state === "" && zip === "") {
-            getLocation()
-        } else callAPI;
-    
+            getResultsByCurrentLocation()
+        } else getResultsByAddress();
+
     })
+    getLocalStorage();
 })
