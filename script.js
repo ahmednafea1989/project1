@@ -2,30 +2,62 @@ $(document).ready(function() {
 
     const $search = $("#button");
     let radius = "";
-    let service = "";
+    let serviceType = "";
     const $answerList = $("#answerList");
     let address = "";
     let city = "";
     let state = "";
     let zip = "";
+    let markerPlaces = [];
 
 
-    function showCurrentPosition(currentPosition) {
+    function createMarker(place) {
+        var marker = new google.maps.Marker({
+            map: map,
+            position: place.geometry.location,
+            icon: place.icon
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.setContent(`Name: ${place.name} Address: ${place.vicinity}`);
+            infowindow.open(map, this);
+        });
+    }
+
+    $(document).on("click", ".inList", function() {
+        const i = parseInt($(this).attr("id"));
+        //   debugger
+        //alert(i);
+        //map.setCenter(markerPlaces[i].geometry.location);
+        regenrateMap(marketPlaces[i].location);
+    });
+
+    function showCurrentPosition(currentPosition, generateList) {
+        //    debugger
         var service = new google.maps.places.PlacesService(map);
         var request = {
             location: currentPosition,
             radius: radius,
-            type: [service],
+            type: [serviceType],
             openNow: false
         };
         service.nearbySearch(request, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
-                for (let i = 0; i < results.length; i++) {
-                    createMarker(results[i]);
-                    // console.log("results  " + results[i].name);
-                    $li = $("<li>");
-                    $li.text(`${results[i].name} `);
-                    $answerList.append($li);
+                if (generateList) {
+                    for (let i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                        $li = $("<li>");
+                        $answerList.append($li);
+                        const $btn = $("<button>");
+                        $li.append($btn);
+                        $btn.addClass("inList");
+                        $btn.attr("id", i);
+                        $btn.text(`${results[i].name} Address: ${results[i].vicinity}`);
+                        $btn.css("background-color", "white");
+                        $btn.css("color", "black");
+                        $btn.css("height", "20px");
+                        $btn.css("width", "100%");
+                        markerPlaces.push(results[i]);
+                    }
                 }
                 map.setCenter(results[0].geometry.location);
             }
@@ -34,7 +66,7 @@ $(document).ready(function() {
 
     function showPositionByLatLon(lat, lon) {
         var currentPosition = new google.maps.LatLng(lat, lon);
-        showCurrentPosition(currentPosition)
+        showCurrentPosition(currentPosition, true);
     }
 
     function getLonLat(filter) {
@@ -71,13 +103,19 @@ $(document).ready(function() {
             }
             filter += filterArray[i];
         }
-        alert(filter);
         return filter;
+    }
+
+    function regenrateMap(position) {
+        //  alert(position);
+        //  debugger
+        var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        showCurrentPosition(currentPosition, false);
     }
 
     function showPosition(position) {
         var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        showCurrentPosition(currentPosition);
+        showCurrentPosition(currentPosition, true);
     }
 
     function getResultsByCurrentLocation() {
@@ -99,7 +137,7 @@ $(document).ready(function() {
         localStorage.setItem('state', state);
         localStorage.setItem('zip', zip);
         localStorage.setItem('radius', radius);
-        localStorage.setItem('service', service);
+        localStorage.setItem('service', serviceType);
     }
 
     function getLocalStorage() {
@@ -108,17 +146,19 @@ $(document).ready(function() {
         $("#state").text = localStorage.getItem('state');
         $("#zip").text = localStorage.getItem('zip');
         $("#radius").text = localStorage.getItem('radius');
-        $("#service").text = localStorage.getItem('service');
+        $("#service").text = localStorage.getItem('serviceType');
     }
 
     $search.on("click", function(e) {
         e.preventDefault();
+        $answerList.empty();
+        markerPlaces = [];
         address = $("#address").val();
         city = $("#city").val();
         state = $("#state").val();
         zip = $("#zip").val();
         radius = $("#radius").val();
-        service = $("#service").val();
+        serviceType = $("#service").val();
 
         setLocalStorage();
 
@@ -127,5 +167,7 @@ $(document).ready(function() {
         } else getResultsByAddress();
 
     })
+
+
     getLocalStorage();
 })
