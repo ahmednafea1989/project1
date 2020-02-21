@@ -109,12 +109,12 @@ $(document).ready(function() {
     function regenrateMap(position) {
         //  alert(position);
         //  debugger
-        var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        let currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         showCurrentPosition(currentPosition, false);
     }
 
     function showPosition(position) {
-        var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        let currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         showCurrentPosition(currentPosition, true);
     }
 
