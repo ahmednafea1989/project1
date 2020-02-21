@@ -18,6 +18,13 @@ crossorigin="anonymous"></script>
     <div class="row">
       <h3 class="ui center aligned block header"> FIND NEAR BY SERVICES</h3>
     </div>
+    <div class= "header2 ui center aligned block header">
+         <a>Enter the location at the center of the service area.</a>
+         <br>
+        <a>If you leave the location empty, the center is where you are.</a>
+        <br>
+        <a>To get the map and the list click on the search button</a>
+    </div>
     <form class="ui fluid form">
       <div class="ui grid container">
         <div class="eight wide column">
@@ -67,26 +74,35 @@ crossorigin="anonymous"></script>
         </div>
     </form>
     <div class="ui grid container">
-      <div class="row">
-        <div class="eight wide row">
+      <div class="seven wide column">
           <ul id = "answerList"> 
           </ul>
-        </div>
-      
-        <div class="eight wide column"> 
-          <div id="map"></div>
-        </div>      
       </div>
+      
+      <div class="nine wide column"> 
+          <div id="map">
+               <img src=".\map.png" alt="the map">
+          </div>
+      </div>      
+      
     </div>
 
- <script
-src="https://code.jquery.com/jquery-3.4.1.min.js"
+    <script>
+    
+    function initMap() {
+        var initialLatLon = new google.maps.LatLng(37.86459674936833, -122.25641501017701);
+        infowindow = new google.maps.InfoWindow();
+        //console.log(infowindow)
+        map = new google.maps.Map(
+            document.getElementById('map'), { center: initialLatLon, zoom: 15 });
+    }
+    </script>
+
+ <script src="https://code.jquery.com/jquery-3.4.1.min.js"
 integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 crossorigin="anonymous"></script> 
-    <script src="./map.js">
-    </script>         
-<script
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjhCzYb-6UuuOtBQ0gfePJ7wjwsTpu8OU&libraries=places&callback=initMap"
+         
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjhCzYb-6UuuOtBQ0gfePJ7wjwsTpu8OU&libraries=places&callback=initMap"
           async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <script src="script.js"></script>
