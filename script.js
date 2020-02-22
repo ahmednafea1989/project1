@@ -23,12 +23,13 @@ $(document).ready(function() {
         });
     }
 
-    $(document).on("click", ".inList", function() {
+    $(document).on("click", ".inList", function(e) {
+        e.preventDefault();
         const i = parseInt($(this).attr("id"));
         //   debugger
         //alert(i);
-        //map.setCenter(markerPlaces[i].geometry.location);
-        regenrateMap(marketPlaces[i].location);
+        map.setCenter(markerPlaces[i].geometry.location);
+        //regenrateMap(markerPlaces[i].location);
     });
 
     function showCurrentPosition(currentPosition, generateList) {
@@ -43,6 +44,8 @@ $(document).ready(function() {
         service.nearbySearch(request, function(results, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 if (generateList) {
+                    $answerList.empty();
+                    markerPlaces = [];
                     for (let i = 0; i < results.length; i++) {
                         createMarker(results[i]);
                         $li = $("<li>");
@@ -141,18 +144,17 @@ $(document).ready(function() {
     }
 
     function getLocalStorage() {
-        $("#address").text = localStorage.getItem('address');
-        $("#city").text = localStorage.getItem('city');
-        $("#state").text = localStorage.getItem('state');
-        $("#zip").text = localStorage.getItem('zip');
-        $("#radius").text = localStorage.getItem('radius');
-        $("#service").text = localStorage.getItem('serviceType');
+        $("#address").text(localStorage.getItem('address'));
+        $("#city").text(localStorage.getItem('city'));
+        $("#state").text(localStorage.getItem('state'));
+        $("#zip").text(localStorage.getItem('zip'));
+        $("#radius").text(localStorage.getItem('radius'));
+        $("#service").text(localStorage.getItem('serviceType'));
     }
 
     $search.on("click", function(e) {
         e.preventDefault();
-        $answerList.empty();
-        markerPlaces = [];
+        
         address = $("#address").val();
         city = $("#city").val();
         state = $("#state").val();
@@ -169,5 +171,5 @@ $(document).ready(function() {
     })
 
 
-    getLocalStorage();
+    //getLocalStorage();
 })
