@@ -2,3 +2,9 @@
      height: 700px;
      width: 100%;
  }
+ 
+
+ }#theForm {
+  background-image: url('services.png');
+  background-repeat: no-repeat;
+}
