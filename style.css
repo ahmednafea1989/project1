@@ -3,8 +3,13 @@
      width: 100%;
  }
  
-
- }#theForm {
-  background-image: url('services.png');
-  background-repeat: no-repeat;
-}
+ #picture {
+     background-image: url('./services.png');
+     background-repeat: no-repeat;
+     background-size: 100%;
+     background-attachment: fixed;
+ }
+ 
+ #test {
+     background-image: url('services.png');
+ }
