@@ -5,11 +5,11 @@
  
  #picture {
      background-image: url('./services.png');
-     background-repeat: no-repeat;
-     background-size: 100%;
+     background-repeat: repeat;
      background-attachment: fixed;
+     background-position: center;
  }
  
- #test {
-     background-image: url('services.png');
+ h2 {
+     color: white;
  }
