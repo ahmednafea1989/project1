@@ -5,14 +5,7 @@
     <title>Find Near by Services</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-    <script
-src="https://code.jquery.com/jquery-3.4.1.min.js"
-integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-crossorigin="anonymous"></script>
-    <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
+    
 </head>
 <body>
     <div class="row">
@@ -25,88 +18,86 @@ crossorigin="anonymous"></script>
         <br>
         <a>To get the map and the list click on the search button</a>
     </div>
-    <h2>
-    <form class="ui form">
-      <div class="ui grid container" id = "picture">
-        <div class="eight wide column">
-            Address: <input type="text" id="address" value="">
-        </div>
-        <div class="row">
-          <div class="five wide column">
-              City: <input type="text" id="city" value="">
+
+    <div class="three column stackable ui grid">
+      <div class="column">  
+      <h2>
+       <form class="ui form">
+          <div class="ui grid container" id = "picture">
+          <div class="eight wide column">
+              Address: <input type="text" id="address" value="">
           </div>
-          <div class="two wide column">
-            State: <input type="text" id="state" value="">
+          <div class="row">
+            <div class="five wide column">
+                City: <input type="text" id="city" value="">
+            </div>
+            <div class="two wide column">
+              State: <input type="text" id="state" value="">
+            </div>
+            <div class="three wide column">
+              Zip: <input type="text" id="zip" value="">
+            </div>
           </div>
-          <div class="three wide column">
-            Zip: <input type="text" id="zip" value="">
-          </div>
-        </div>
         
-​        <div class="row">
-          <div class="five wide column">
-            Service Type :
-            <select id='service'>
-              <option value="gas_station">gas_station</option>
-              <option value="airport">airport</option>
-              <option value="atm">atm</option>
-              <option value="bank">bank</option>
-              <option value="bus_station">bus_station</option>
-              <option value="cafe">cafe</option>
-              <option value="car_rental">car_rental</option>
-              <option value="car_repair">car_repair</option>
-              <option value="car_wash">car_wash</option>
-              <option value="movie_theater">movie_theater</option>
-              <option value="park">park</option>
-              <option value="police">police</option>
-              <option value="post_office">post_office</option>
-              <option value="school">school</option>
-              <option value="spa">spa</option>
-              <option value="parking">parking</option>
-              <option value="train_station">train_station</option>
-            </select>
-          </div>
-          <div class="four wide column">
-             Radius [meter]: <input type="text" id="radius" value="2000">
-          </div>
-          <div class="two wide column">          
-            <button class="ui button" id="button">Search</button>
-          </div>
-        </div>
-    </form>
-    </h2>
-    <div class="ui grid container">
-      <div class="seven wide column">
+​          <div class="row">
+            <div class="five wide column">
+              Service Type :
+              <select id='service'>
+                <option value="gas_station">gas_station</option>
+                <option value="airport">airport</option>
+                <option value="atm">atm</option>
+                <option value="bank">bank</option>
+                <option value="bus_station">bus_station</option>
+                <option value="cafe">cafe</option>
+                <option value="car_rental">car_rental</option>
+                <option value="car_repair">car_repair</option>
+                <option value="car_wash">car_wash</option>
+                <option value="movie_theater">movie_theater</option>
+                <option value="park">park</option>
+                <option value="police">police</option>
+                <option value="post_office">post_office</option>
+                <option value="school">school</option>
+                <option value="spa">spa</option>
+                <option value="parking">parking</option>
+                <option value="train_station">train_station</option>
+              </select>
+            </div>
+            <div class="four wide column">
+              Radius [meter]: <input type="text" id="radius" value="2000">
+            </div>
+            <div class="two wide column">          
+              <button class="ui button" id="button">Search</button>
+            </div>
+         </div>
+       </form>
+      </h2>
+     </div> 
+
+     <div class="column"> 
+        <div class="seven wide column">
           <ul id = "answerList"> 
           </ul>
-      </div>
+        </div>
+      </div>  
       
-      <div class="nine wide column"> 
+      <div class="column"> 
           <div id="map">
                <img src=".\map.png" alt="the map">
           </div>
       </div>      
-      
+    </div>  
     </div>
 
     <script>
-    
-    function initMap() {
-        var initialLatLon = new google.maps.LatLng(37.86459674936833, -122.25641501017701);
-        infowindow = new google.maps.InfoWindow();
-        //console.log(infowindow)
-        map = new google.maps.Map(
+        function initMap() {
+            var initialLatLon = new google.maps.LatLng(37.86459674936833, -122.25641501017701);
+            infowindow = new google.maps.InfoWindow();
+            map = new google.maps.Map(
             document.getElementById('map'), { center: initialLatLon, zoom: 15 });
-    }
+        }
     </script>
-
- <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-crossorigin="anonymous"></script> 
-         
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjhCzYb-6UuuOtBQ0gfePJ7wjwsTpu8OU&libraries=places&callback=initMap"
-          async defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjhCzYb-6UuuOtBQ0gfePJ7wjwsTpu8OU&libraries=places&callback=initMap" async defer></script>
     <script src="script.js"></script>
 </body>
 </html>
