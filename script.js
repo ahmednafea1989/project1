@@ -72,14 +72,29 @@ $(document).ready(function() {
     }
 
     function getLonLat(filter) {
-        //       alert(filter);
         $.ajax({
             url: queryUrl(filter),
-            method: "GET"
-        }).then(function(response) {
-            showPositionByLatLon(response[0].lat, response[0].lon)
-        })
+            method: "GET",
+            success: function(response) {
+                alert(`getLonLat ${response}`);
+                showPositionByLatLon(response[0].lat, response[0].lon)
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(`Search failed for filter: ${filter} Error ${xhr.status}`);
+            }
+        });
     }
+
+    // function getLonLat(filter) {
+    //     //       alert(filter);
+    //     $.ajax({
+    //         url: queryUrl(filter),
+    //         method: "GET"
+    //     }).then(function(response) {
+    //         alert(`getLonLat ${response}`);
+    //         showPositionByLatLon(response[0].lat, response[0].lon)
+    //     })
+    // }
 
     // function getLonLat(filter) {
     //     $.ajax({
@@ -100,7 +115,7 @@ $(document).ready(function() {
     };
 
     function filterOf(name, item) {
-        if (item === "") {
+        if (item === "" || item === undefined) {
             return "";
         } else {
             return `${name}=${item}`
@@ -158,7 +173,6 @@ $(document).ready(function() {
         $("#zip").val(localStorage.getItem('zip'));
 
         const radius = localStorage.getItem('radius');
-
         if (radius === "" || radius === null) {
             $("#radius").val("2000");
         } else {
@@ -166,7 +180,6 @@ $(document).ready(function() {
         }
 
         const service = localStorage.getItem('service');
-
         if (service === "" || service === null) {
             $("#service").val("gas_service");
         } else {
@@ -174,19 +187,20 @@ $(document).ready(function() {
         }
     }
 
+    function noValue(item) {
+        return item === "" || item === null || item === undefined;
+    }
+
     $search.on("click", function(e) {
         e.preventDefault();
-
         address = $("#address").val();
         city = $("#city").val();
         state = $("#state").val();
         zip = $("#zip").val();
         radius = $("#radius").val();
         service = $("#service").val();
-
         setLocalStorage();
-
-        if (address === "" && city === "" && state === "" && zip === "") {
+        if (noValue(address) && noValue(city) && noValue(state) && noValue(zip)) {
             getResultsByCurrentLocation()
         } else getResultsByAddress();
 
