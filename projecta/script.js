@@ -1,20 +1,18 @@
-//let map;
-
 $(document).ready(function() {
 
-    const $search = $("#search");
-    const $service = $("#service");
-    const $answerList = $("#answerList");
-    const $formColumn = $("#formColumn");
-    const $listColumn = $("#listColumn");
+    const $search = $('#search');
+    const $service = $('#service');
+    const $answerList = $('#answerList');
+    const $formColumn = $('#formColumn');
+    const $listColumn = $('#listColumn');
     const $mapColumn = $('#mapColumn');
     const minimumHeight = $formColumn.height();
-    let radius = "";
-    let service = "";
-    let address = "";
-    let city = "";
-    let state = "";
-    let zip = "";
+    let radius = '';
+    let service = '';
+    let address = '';
+    let city = '';
+    let state = '';
+    let zip = '';
     let markerPlaces = [];
     let markerArray = [];
 
@@ -36,27 +34,27 @@ $(document).ready(function() {
         markerArray.push(marker);
     }
 
-    $(document).on("click", ".inList", function(e) {
+    $(document).on('click', '.inList', function(e) {
         e.preventDefault();
-        const i = parseInt($(this).attr("id"));
+        const i = parseInt($(this).attr('id'));
         map.setCenter(markerPlaces[i].geometry.location);
     });
 
     function addSeviceItem(place, i) {
         const markerNumber = i + 1;
         createMarker(place, markerNumber);
-        $li = $("<li>");
+        $li = $('<li>');
         $answerList.append($li);
-        const $btn = $("<button>");
+        const $btn = $('<button>');
         $li.append($btn);
-        $btn.addClass("inList");
-        $btn.attr("id", markerNumber);
+        $btn.addClass('inList');
+        $btn.attr('id', markerNumber);
         $btn.text(`${markerNumber}: ${place.name} Address: ${place.vicinity}`);
-        $btn.css("text-align", "left")
-        $btn.css("background-color", "white");
-        $btn.css("color", "black");
-        $btn.css("height", "20px");
-        $btn.css("width", "100%");
+        $btn.css('text-align', 'left')
+        $btn.css('background-color', 'white');
+        $btn.css('color', 'black');
+        $btn.css('height', '20px');
+        $btn.css('width', '100%');
         markerPlaces.push(place);
     }
 
@@ -101,7 +99,7 @@ $(document).ready(function() {
     function getLonLat(filter) {
         $.ajax({
             url: queryUrl(filter),
-            method: "GET",
+            method: 'GET',
             success: function(response) {
                 showPositionByLatLon(response[0].lat, response[0].lon)
             },
@@ -116,8 +114,8 @@ $(document).ready(function() {
     };
 
     function filterOf(name, item) {
-        if (item === "" || item === undefined) {
-            return "";
+        if (item === '' || item === undefined) {
+            return '';
         } else {
             return `${name}=${item}`
         }
@@ -131,8 +129,8 @@ $(document).ready(function() {
         filterArray.push(filterOf(`postalcode`, zip));
         let filter = '';
         for (let i = 0; i < filterArray.length; i++) {
-            if (filter != "" && filterArray[i] != "") {
-                filter = filter + "&";
+            if (filter != '' && filterArray[i] != '') {
+                filter = filter + '&';
             }
             filter += filterArray[i];
         }
@@ -149,7 +147,7 @@ $(document).ready(function() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
         } else {
-            alert("Geolocation is not supported by this browser.");
+            alert('Geolocation is not supported by this browser.');
         }
     }
 
@@ -168,38 +166,38 @@ $(document).ready(function() {
     }
 
     function getLocalStorage() {
-        $("#address").val(localStorage.getItem('address'));
-        $("#city").val(localStorage.getItem('city'));
-        $("#state").val(localStorage.getItem('state'));
-        $("#zip").val(localStorage.getItem('zip'));
+        $('#address').val(localStorage.getItem('address'));
+        $('#city').val(localStorage.getItem('city'));
+        $('#state').val(localStorage.getItem('state'));
+        $('#zip').val(localStorage.getItem('zip'));
         const radius = localStorage.getItem('radius');
-        if (radius === "" || radius === null) {
-            $("#radius").val("2000");
+        if (radius === '' || radius === null) {
+            $('#radius').val('2000');
         } else {
-            $("#radius").val(radius);
+            $('#radius').val(radius);
         }
         const service = localStorage.getItem('service');
-        if (service === "" || service === null) {
-            $("#service").val("gas_service");
+        if (service === '' || service === null) {
+            $('#service').val('gas_service');
         } else {
-            $("#service").val(service);
+            $('#service').val(service);
         }
     }
 
     function noValue(item) {
-        return item === "" || item === null || item === undefined;
+        return item === '' || item === null || item === undefined;
     }
 
-    $search.on("click", function(e) {
+    $search.on('click', function(e) {
         e.preventDefault();
-        address = $("#address").val();
-        city = $("#city").val();
-        state = $("#state").val();
-        zip = $("#zip").val();
-        radius = $("#radius").val();
+        address = $('#address').val();
+        city = $('#city').val();
+        state = $('#state').val();
+        zip = $('#zip').val();
+        radius = $('#radius').val();
         service = $service.val();
         setLocalStorage();
-        $("#foundServices").text(service);
+        $('#foundServices').text(service);
         if (noValue(address) && noValue(city) && noValue(state) && noValue(zip)) {
             getResultsByCurrentLocation()
         } else getResultsByAddress();
