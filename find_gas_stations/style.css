@@ -3,6 +3,10 @@
     height: 100%;
 }
 
+#page1 {
+    padding-left: 20px;
+}
+
 .name {
     font-size: large;
     color: yellowgreen;
@@ -27,8 +31,4 @@
 
 .services1 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-#button {
-    background-color: orange;
 }

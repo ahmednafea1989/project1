@@ -7,7 +7,6 @@ $(document).ready(function() {
     const $mapColumn = $('#map');
 
     function getGasLocation() {
-
         getLocation();
 
         function getLocation() {
@@ -70,7 +69,7 @@ $(document).ready(function() {
                         const hrEl = $('<hr>');
                         $('#page1').append(hrEl);
                     };
-                    map.setCenter(results[0].geometry.location);
+                    map.setCenter(currentLocation);
                     setMapColumnHeight();
                 };
             });
