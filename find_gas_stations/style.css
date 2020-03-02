@@ -1,0 +1,34 @@
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+#page1 {
+    padding-left: 20px;
+}
+
+.name {
+    font-size: large;
+    color: yellowgreen;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.p3Click {
+    color: steelblue;
+}
+
+.address {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.rating {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.service {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.services1 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
