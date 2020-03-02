@@ -1,0 +1,137 @@
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Find Services</title>
+    <link rel='stylesheet' href='style.css'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css'>
+</head>
+
+<body>
+<font face = 'Times New Roman'>
+    <h1 class='ui center aligned block header'> FIND SERVICES</h1>
+      <div class='ui inverted menu stackable'>
+      <a class='red item' href= '../index.html'>
+        Home
+      </a>
+      <a class='active orange item' href= './find_services/index.html'>
+        Find Services
+      </a>
+      <a class='yellow item' href= './find_gas_stations/index.html'>
+        Near by Gas Stations
+      </a>
+      <a class='olive item'>
+        About
+      </a>
+      
+    </div>
+    
+
+    <div class='three column stackable ui grid'>
+      
+      <div class='column' id = 'formColumn'>  
+        <div class= 'header2 ui center aligned block header'>
+          <a>Enter the location at the center of the service area.</a>
+          <br>
+          <a>If you leave the location empty, the center is where you are.</a>
+          <br>
+          <a>To get the map and the list click on the search button</a>
+        </div>
+      
+        <form class='ui form'><h5>
+
+        <div class='ui grid container' >
+
+          <div class='row' >
+            <div class='sixteen wide column '>
+              Address: <input type='text' value='' class = 'input1' id ='address'>
+            </div>
+          </div>  
+
+          <div class='row'>
+            <div class='eight wide column'>
+                City: <input type='text' id='city' value=''>
+            </div>
+            <div class='three wide column'>
+              State: <input type='text' id='state' value=''>
+            </div>
+            <div class='five wide column'>
+              Zip: <input type='text' id='zip' value=''>
+            </div>
+          </div>
+
+          <div class='row'>
+            <div class='eight wide column'>
+              Service Type :
+              <select id='service'>
+                <option value='airport'>airport</option>
+                <option value='atm'>atm</option>
+                <option value='bank'>bank</option>
+                <option value='bus_station'>bus station</option>
+                <option value='cafe'>cafe</option>
+                <option value='car_rental'>car rental</option>
+                <option value='car_repair'>car repair</option>
+                <option value='car_wash'>car wash</option>
+                <option value='gas_station'>gas station</option>
+                <option value='movie_theater'>movie theater</option>
+                <option value='park'>park</option>
+                <option value='police'>police</option>
+                <option value='post_office'>post office</option>
+                <option value='school'>school</option>
+                <option value='spa'>spa</option>
+                <option value='parking'>parking</option>
+                <option value='train_station'>train station</option>
+              </select>
+            </div>
+
+            <div class='five wide column' >
+              Radius [meter]: <input type='text' id='radius' value=''>
+            </div>
+
+            <div class='two wide column' > 
+            <br>
+                <button class='ui button' id='search'><i class='search icon'></i></button>  
+             </div>
+
+          </div>
+          </div>
+       </h5></form>
+       
+     </div> 
+
+     <div class='column'id = 'listColumn'> 
+        <h3 class='ui center aligned block header' id = 'foundServices'> FOUND SERVICES</h3>
+          <ul id = 'answerList'> 
+          </ul>
+      </div>
+      
+      
+      <div class='column' id = 'mapColumn'> 
+         
+         <div id='map'>
+             <img src='.\map.png' alt='the map'>
+          </div>
+      </div>      
+    </div>  
+    </div>
+
+    <script>
+        function initMap() {
+            var initialLatLon = new google.maps.LatLng(37.86459674936833, -122.25641501017701);
+            infowindow = new google.maps.InfoWindow();
+            map = new google.maps.Map(
+              document.getElementById('map'), 
+              { center: initialLatLon, zoom: 15 }
+            );
+        }
+    </script>
+    <script src='https://code.jquery.com/jquery-3.4.1.js' integrity='sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=' crossorigin='anonymous'></script>
+    <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCjhCzYb-6UuuOtBQ0gfePJ7wjwsTpu8OU&libraries=places&callback=initMap' async defer></script>
+    <script src='script.js'></script>
+    </font>
+</body>
+</html>
+
+
+
+
